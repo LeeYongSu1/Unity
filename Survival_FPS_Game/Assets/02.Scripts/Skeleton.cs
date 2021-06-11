@@ -153,7 +153,7 @@ public class Skeleton : MonoBehaviour
 
         isDie = true;
         U_Manager.umanager.KillCount(1);
-        Destroy(this.gameObject, 5.0f);
+        
     }
 
     void SkeletonHpManager()

@@ -89,7 +89,7 @@ public class ZomBie : MonoBehaviour
         this.GetComponent<CapsuleCollider>().enabled = false;
         isDie = true;
        
-        Destroy(this.gameObject, 3.0f);
+        
         U_Manager.umanager.KillCount(1);
 
     }

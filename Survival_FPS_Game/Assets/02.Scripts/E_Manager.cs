@@ -19,7 +19,7 @@ public class E_Manager : MonoBehaviour
     private float s_timePrev; //과거시
     private float stone_time;
     private int maxcount = 10;
-    private int s_maxcount = 1;
+    private int s_maxcount = 3;
     private int spawncount = 0;
     private int s_spawncount = 0;
     private int ston_count = 0;
@@ -29,6 +29,19 @@ public class E_Manager : MonoBehaviour
         timePrev = Time.time;
         s_timePrev = Time.time;//현재 시간
         stone_time = Time.time;
+
+        for(int i =0; i< maxcount; i++)
+        {
+            GameObject zom = Instantiate(zombiePrefab);
+           
+            zom.name = "zombie" + i.ToString();
+        }
+        for (int i = 0; i < s_maxcount; i++)
+        {
+           
+            GameObject skel = Instantiate(skeletonPrefab);
+            skel.name = "skeleton" + i.ToString();
+        }
     }
 
 
@@ -73,13 +86,13 @@ public class E_Manager : MonoBehaviour
     void CreateZomBie()
     {
         int idx = Random.Range(1, 5);
-        Instantiate(zombiePrefab, points[idx].position, points[idx].rotation);
+        //Instantiate(zombiePrefab, points[idx].position, points[idx].rotation);
     }
 
     void CreateSkeleton()
     {
         //int idx = Random.Range(1, points.Length);
-        Instantiate(skeletonPrefab, s_points.position, s_points.rotation);
+       // Instantiate(skeletonPrefab, s_points.position, s_points.rotation);
     }
 
     void CreateStone()
