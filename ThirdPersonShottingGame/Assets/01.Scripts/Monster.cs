@@ -34,7 +34,7 @@ public class Monster : MonoBehaviour
 
     [SerializeField]
     private GameObject bloodDecal;
-    public int damage = 15;
+    
 
     void Start()
     {
