@@ -31,7 +31,8 @@ public class Monster : MonoBehaviour
     private Text hp;
     public int _hp = 100;
     public int hpinit;
-
+    [SerializeField]
+    private Canvas hudCanvas;
     [SerializeField]
     private GameObject bloodDecal;
     
@@ -46,6 +47,7 @@ public class Monster : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<Transform>();
         nav.destination = player.position;
         IsDie = false;
+        hudCanvas = gameObject.transform.GetChild(14).GetComponent<Canvas>();
         HPbar = gameObject.transform.GetChild(14).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>();
         HPbar.color = Color.green;
         hp = gameObject.transform.GetChild(14).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
@@ -122,7 +124,20 @@ public class Monster : MonoBehaviour
     }
     void MonsterDie()
     {
-        Debug.Log("다이");
+        StopAllCoroutines(); //모든 코루틴 중지
+        nav.isStopped = true;
+        IsDie = true;
+        GetComponent<CapsuleCollider>().enabled = false;
+        hudCanvas.enabled = false;
+        anim.SetTrigger("IsDie");
+        //Destroy(gameObject, 3.0f);
+        rbody.isKinematic = true;
+
+        foreach(Collider col in GetComponentsInChildren<SphereCollider>())
+        {
+            col.enabled = false;
+        }
+        
     }
 
     void CreateBlood()
