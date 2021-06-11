@@ -36,6 +36,6 @@ public class PlayerHP : MonoBehaviour
     }
     void PlayerDie()
     {
-
+        GameManager.gmr.IsGameOver = true;
     }
 }

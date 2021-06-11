@@ -195,7 +195,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1346,6 +1346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterPre: {fileID: 0}
   points: []
+  IsGameOver: 0
   maxcount: 0
   count: 0
 --- !u!4 &1045100451
@@ -2354,8 +2355,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8863141572331583791, guid: c13c8760fbf27f645adf9f02a0ffeae9, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c13c8760fbf27f645adf9f02a0ffeae9, type: 3}
 --- !u!1001 &2139539200670815071
 PrefabInstance:
