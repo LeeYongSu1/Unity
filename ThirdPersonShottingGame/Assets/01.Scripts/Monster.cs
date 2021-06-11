@@ -40,8 +40,7 @@ public class Monster : MonoBehaviour
     private GameObject bloodDecal;
     [SerializeField]
     private GameUI gameUI;
-
-    void Start()
+    private void Awake()
     {
         hpinit = _hp;
         monster = GetComponent<Transform>();
@@ -49,19 +48,26 @@ public class Monster : MonoBehaviour
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
         a_source = GetComponent<AudioSource>();
-        a_source.clip = Resources.Load<AudioClip>("player_killed_1")as AudioClip;
+        a_source.clip = Resources.Load<AudioClip>("player_killed_1") as AudioClip;
         player = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        nav.destination = player.position;
-        IsDie = false;
         hudCanvas = gameObject.transform.GetChild(14).GetComponent<Canvas>();
         HPbar = gameObject.transform.GetChild(14).transform.GetChild(0).transform.GetChild(0).GetComponent<Image>();
-        HPbar.color = Color.green;
         hp = gameObject.transform.GetChild(14).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
         bloodDecal = Resources.Load<GameObject>("Effects/BloodDecal");
         gameUI = GameObject.Find("GameManager").GetComponent<GameUI>();
+        nav.destination = player.position;
+        IsDie = false;
+        HPbar.color = Color.green;
+        
+    }
 
+    private void OnEnable() //활성화 될 때 스타트 함수보다 빨리 호출됨
+    {
         StartCoroutine(checkmonsterState());
         StartCoroutine(MonsterAction());
+    }
+    void Start()
+    {
         
     }
     IEnumerator checkmonsterState()
@@ -141,12 +147,34 @@ public class Monster : MonoBehaviour
         Destroy(gameObject, 3.0f);
         rbody.isKinematic = true;
 
-        foreach(Collider col in GetComponentsInChildren<SphereCollider>())
+        foreach (Collider col in GetComponentsInChildren<SphereCollider>())
         {
             col.enabled = false;
         }
         gameUI.DisplayScore(1);
         a_source.PlayOneShot(a_source.clip);
+        StartCoroutine(PushObjectPool());
+    }
+    IEnumerator PushObjectPool()
+    {
+        yield return new WaitForSeconds(3.0f);
+        nav.isStopped = false;
+        IsDie = false;
+        _hp = 100;
+        HPbar.fillAmount = 1.0f;
+        HPbar.color = Color.green;
+        GetComponent<CapsuleCollider>().enabled = true;
+        hudCanvas.enabled = true;
+        //anim.SetTrigger("IsDie");
+        
+        rbody.isKinematic = false;
+
+        foreach (Collider col in GetComponentsInChildren<SphereCollider>())
+        {
+            col.enabled = true;
+        }
+        //gameUI.DisplayScore(1);
+       // a_source.PlayOneShot(a_source.clip);
     }
 
     void CreateBlood()

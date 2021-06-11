@@ -1345,6 +1345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterPre: {fileID: 0}
+  monsterPool: []
   points: []
   IsGameOver: 0
   maxcount: 0

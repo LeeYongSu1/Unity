@@ -8,16 +8,17 @@ public enum MonsterState
 {
     idle, trace, attack, die
 }
+
 public class Skeleton : MonoBehaviour
 
 {
     [SerializeField]
     private NavMeshAgent navi;
-    public Animator ani;
+    private Animator ani;
     private Transform playerTr;
-    public Transform skeletonTr;
-    public CapsuleCollider capcol;
-    public Rigidbody rbody;
+    private Transform skeletonTr;
+    private CapsuleCollider capcol;
+    private Rigidbody rbody;
     public float tracedist = 25.0f;
     public float attackdist = 10.0f;
     public int hp = 500;
@@ -30,17 +31,31 @@ public class Skeleton : MonoBehaviour
     public MonsterState monsterState;
     //public Text hptext;
 
-    void Start()
+    private void Awake()
     {
+        skeletonTr = GetComponent<Transform>();
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         navi = GetComponent<NavMeshAgent>();
+        ani = GetComponent<Animator>();
+        rbody = GetComponent<Rigidbody>();
+        capcol = GetComponent<CapsuleCollider>();
         //하이라키에 Player태그를 가진 게임 오브젝트안에 트랜스폼을 넘긴다.
         hpbar.color = Color.green;
         monsterState = MonsterState.idle;
         isDie = false;
+    }
+
+    private void OnEnable()//활성화때 스타트 함수보다 먼저 호출된다
+    {
         StartCoroutine(checkmonsterState());
         StartCoroutine(MonsterAction());
         PlayerDie();
+    }
+
+    void Start()
+    {
+        
+        
     }
     IEnumerator checkmonsterState()
     {
@@ -127,12 +142,8 @@ public class Skeleton : MonoBehaviour
             SkeletonHpManager();
             if (hp <= 0)
                 Die();
-
-
-
         }
     }
-
 
     void Die()
     {
@@ -143,7 +154,6 @@ public class Skeleton : MonoBehaviour
         isDie = true;
         U_Manager.umanager.KillCount(1);
         Destroy(this.gameObject, 5.0f);
-
     }
 
     void SkeletonHpManager()

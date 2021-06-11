@@ -49,16 +49,29 @@ public class GameManager : MonoBehaviour
     {
         while(!IsGameOver)
         {
-            int monstercount = GameObject.FindGameObjectsWithTag("MONSTER").Length;
+            /*int monstercount = GameObject.FindGameObjectsWithTag("MONSTER").Length;
             if(monstercount<maxcount)
             {
                 yield return new WaitForSeconds(Random.Range(2.5f, 4.5f));
-                int idx = Random.Range(1, points.Length);
-                //Instantiate(monsterPre, points[idx].position, points[idx].rotation);
+                //int idx = Random.Range(1, points.Length);
+                //Instantiate(monsterPre, points[idx].position, points[idx].rotation);ㅠ
             }
             else
             {
                 yield return null;
+            }*/
+            yield return new WaitForSeconds(3.0f);
+            if (IsGameOver) yield break;
+            foreach(GameObject _monster in monsterPool)
+            {       //activeSlef = 활성화 비활성화 여부 알려줌
+                if (!_monster.activeSelf)
+                {
+                    int idx = Random.Range(1, points.Length);
+                    _monster.transform.position = points[idx].position;
+                    _monster.SetActive(true);
+                    break;
+                    //오브젝트 풀에서 몬스터 프리팹을 하나 활성화하면 빠져나감
+                }
             }
             
         }
