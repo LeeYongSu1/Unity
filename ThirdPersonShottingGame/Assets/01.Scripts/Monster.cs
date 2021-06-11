@@ -21,11 +21,14 @@ public class Monster : MonoBehaviour
     Animator anim;
     [SerializeField]
     NavMeshAgent nav;
-    
+    [SerializeField]
+    AudioSource a_source;
+   
+
     public float tracedist = 15.0f;
     public float attackdist = 2.5f;
     private bool IsDie;
-
+    
     [Header("UI")]
     private Image HPbar;
     private Text hp;
@@ -35,7 +38,8 @@ public class Monster : MonoBehaviour
     private Canvas hudCanvas;
     [SerializeField]
     private GameObject bloodDecal;
-    
+    [SerializeField]
+    private GameUI gameUI;
 
     void Start()
     {
@@ -44,6 +48,8 @@ public class Monster : MonoBehaviour
         rbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
+        a_source = GetComponent<AudioSource>();
+        a_source.clip = Resources.Load<AudioClip>("player_killed_1")as AudioClip;
         player = GameObject.FindWithTag("Player").GetComponent<Transform>();
         nav.destination = player.position;
         IsDie = false;
@@ -52,7 +58,7 @@ public class Monster : MonoBehaviour
         HPbar.color = Color.green;
         hp = gameObject.transform.GetChild(14).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
         bloodDecal = Resources.Load<GameObject>("Effects/BloodDecal");
-
+        gameUI = GameObject.Find("GameManager").GetComponent<GameUI>();
 
         StartCoroutine(checkmonsterState());
         StartCoroutine(MonsterAction());
@@ -119,6 +125,8 @@ public class Monster : MonoBehaviour
             if (_hp<=0)
             {
                 MonsterDie();
+                
+
             }
         }
     }
@@ -130,14 +138,15 @@ public class Monster : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         hudCanvas.enabled = false;
         anim.SetTrigger("IsDie");
-        //Destroy(gameObject, 3.0f);
+        Destroy(gameObject, 3.0f);
         rbody.isKinematic = true;
 
         foreach(Collider col in GetComponentsInChildren<SphereCollider>())
         {
             col.enabled = false;
         }
-        
+        gameUI.DisplayScore(1);
+        a_source.PlayOneShot(a_source.clip);
     }
 
     void CreateBlood()

@@ -11,6 +11,7 @@ TagManager:
   - HELLGI
   - PUNCH
   - HP
+  - MONSTER
   layers:
   - Default
   - TransparentFX

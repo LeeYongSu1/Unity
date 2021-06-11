@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
         
     }
 
-    private void FollowPlayer()
+    private void FadeOutWall()
     {
 
     }
