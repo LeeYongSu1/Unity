@@ -2836,7 +2836,6 @@ MonoBehaviour:
   tracedist: 25
   attackdist: 2.5
   hp: 100
-  dmg: 25
   hpbar: {fileID: 6819280347328188146}
   canvas: {fileID: 823608060908284528}
   hptext: {fileID: 2052269560}

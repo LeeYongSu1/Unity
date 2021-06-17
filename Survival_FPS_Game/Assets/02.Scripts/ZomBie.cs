@@ -16,7 +16,6 @@ public class ZomBie : MonoBehaviour
     [Header("Stat")]
     public int hp = 100;
     private int _hp = 100;
-    public int dmg = 25;
 
     private bool isDie = false;
     
@@ -58,7 +57,7 @@ public class ZomBie : MonoBehaviour
         }
 
     }
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "BULLET")
         {
@@ -69,10 +68,20 @@ public class ZomBie : MonoBehaviour
             if (hp <= 0)
                 Die();
         }
-    }
-    void HPManager()
+    }*/
+
+    void OnDamage(object[] _object)
     {
-        hp -= dmg;
+        ani.SetTrigger("IsHit");
+        HPManager(_object);
+
+        if (hp <= 0)
+            Die();
+    }
+
+    void HPManager(object[] _object)
+    {
+        hp -= (int)_object[1];
         hpbar.fillAmount = (float)hp / (float)_hp;
         if (hpbar.fillAmount <= 0.3f)
             hpbar.color = Color.red;
@@ -88,10 +97,18 @@ public class ZomBie : MonoBehaviour
         ani.SetTrigger("IsDie");
         this.GetComponent<CapsuleCollider>().enabled = false;
         isDie = true;
-       
-        
+        navi.isStopped = true;
+        canvas.enabled = false;
+        hpbar.fillAmount = 1.0f;
+        hpbar.color = Color.green;
+        Invoke("DestroyZombie", 3f);
         U_Manager.umanager.KillCount(1);
 
+    }
+
+    private void DestroyZombie()
+    {
+        ObjectPool.ReturnObject(this);
     }
 
 }

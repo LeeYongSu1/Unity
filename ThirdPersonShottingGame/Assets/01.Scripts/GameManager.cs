@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     private int count;
     //싱글톤 패턴을 위한 인스턴스 변수 선언
     public static GameManager gmr;  //게임 매니저에 쉽게 접근하기 위해 대표 변수 선언
+    [Header("soundManager")]
+    public float sfxVolumn = 1.0f;
+    public bool isSfxMute = false;
     private void Awake()
     {
         //밑에 스타트 함수보다 먼저 호출되는 함수
@@ -75,5 +78,20 @@ public class GameManager : MonoBehaviour
             }
             
         }
+    }
+    //사운드 공용 함수 동적으로 생성 되었다가 사라진다.
+    public void PlayeSfx(Vector3 pos, AudioClip sfx)
+    {
+        if (isSfxMute) return;  //음소거면 하위 루틴을 생략
+        GameObject soundObj = new GameObject("sfx");
+        soundObj.transform.position = pos;
+                                            
+        AudioSource audioSource = soundObj.AddComponent<AudioSource>();
+        audioSource.clip = sfx;
+        audioSource.minDistance = 10.0f;
+        audioSource.maxDistance = 30.0f;
+        audioSource.volume = sfxVolumn;
+        audioSource.Play();
+        Destroy(soundObj, sfx.length);
     }
 }

@@ -118,9 +118,9 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag=="BULLET")
+        if (collision.gameObject.tag == "BULLET")
         {
             Destroy(collision.gameObject);
             anim.SetTrigger("IsHit");
@@ -128,14 +128,14 @@ public class Monster : MonoBehaviour
             HPbar.fillAmount = (float)_hp / (float)hpinit;
             hp.text = "Hp : " + _hp.ToString();
             CreateBlood();
-            if (_hp<=0)
+            if (_hp <= 0)
             {
                 MonsterDie();
-                
+
 
             }
         }
-    }
+    }*/
     void MonsterDie()
     {
         StopAllCoroutines(); //모든 코루틴 중지
@@ -144,7 +144,6 @@ public class Monster : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         hudCanvas.enabled = false;
         anim.SetTrigger("IsDie");
-        Destroy(gameObject, 3.0f);
         rbody.isKinematic = true;
 
         foreach (Collider col in GetComponentsInChildren<SphereCollider>())
@@ -166,7 +165,7 @@ public class Monster : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = true;
         hudCanvas.enabled = true;
         //anim.SetTrigger("IsDie");
-        
+
         rbody.isKinematic = false;
 
         foreach (Collider col in GetComponentsInChildren<SphereCollider>())
@@ -174,16 +173,32 @@ public class Monster : MonoBehaviour
             col.enabled = true;
         }
         //gameUI.DisplayScore(1);
-       // a_source.PlayOneShot(a_source.clip);
+        a_source.PlayOneShot(a_source.clip);
     }
 
-    void CreateBlood()
+    public void OnDamaged(object[] _params)
     {
-        Vector3 decalPos = monster.position + (Vector3.up * 0.08f);
-        Quaternion decalRot = Quaternion.Euler(90f, 0, Random.Range(1, 360));
-        GameObject blooddecal = Instantiate(bloodDecal, decalPos, decalRot);
-        float _scale = Random.Range(1.5f, 3.9f);
-        blooddecal.transform.localScale = Vector3.one * _scale;
-        Destroy(blooddecal, 5.0f);
+        anim.SetTrigger("IsHit");
+        _hp -= (int)_params[1];
+        HPbar.fillAmount = (float)_hp / (float)hpinit;
+        hp.text = "Hp : " + _hp.ToString();
+        CreateBlood();
+        if (_hp <= 0)
+        {
+            MonsterDie();
+
+        }
+
+        
+
+        void CreateBlood()
+        {
+            Vector3 decalPos = monster.position + (Vector3.up * 0.08f);
+            Quaternion decalRot = Quaternion.Euler(90f, 0, Random.Range(1, 360));
+            GameObject blooddecal = Instantiate(bloodDecal, decalPos, decalRot);
+            float _scale = Random.Range(1.5f, 3.9f);
+            blooddecal.transform.localScale = Vector3.one * _scale;
+            Destroy(blooddecal, 5.0f);
+        }
     }
 }

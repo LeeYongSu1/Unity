@@ -15,6 +15,8 @@ public class E_Manager : MonoBehaviour
     public GameObject zombiePrefab;
     public GameObject skeletonPrefab;
     public GameObject stonePrefab;
+    
+   
     private float timePrev;
     private float s_timePrev; //과거시
     private float stone_time;
@@ -32,15 +34,16 @@ public class E_Manager : MonoBehaviour
 
         for(int i =0; i< maxcount; i++)
         {
-            GameObject zom = Instantiate(zombiePrefab);
+            /* var zom = Instantiate(zombiePrefab);*/
+            StartCoroutine(Zombie());
            
-            zom.name = "zombie" + i.ToString();
+            /*zom.name = "zombie" + i.ToString();*/
         }
         for (int i = 0; i < s_maxcount; i++)
         {
            
-            GameObject skel = Instantiate(skeletonPrefab);
-            skel.name = "skeleton" + i.ToString();
+           /* GameObject skel = Instantiate(skeletonPrefab);
+            skel.name = "skeleton" + i.ToString();*/
         }
     }
 
@@ -99,5 +102,12 @@ public class E_Manager : MonoBehaviour
     {
         int idx = Random.Range(6, stone_points.Length);
         Instantiate(stonePrefab, stone_points[idx].position, stone_points[idx].rotation);
+    }
+
+    IEnumerator Zombie()
+    {
+        yield return new WaitForSeconds(2.0f);
+        ObjectPool.GetObject();
+        
     }
 }

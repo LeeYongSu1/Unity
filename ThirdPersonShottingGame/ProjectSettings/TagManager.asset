@@ -12,6 +12,8 @@ TagManager:
   - PUNCH
   - HP
   - MONSTER
+  - WALL
+  - BARREL
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Player
   - BULLET
   - Monster
-  - 
+  - Wall
   - 
   - 
   - 

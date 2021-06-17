@@ -18,6 +18,9 @@ public class FirePos : MonoBehaviour
     public int bulletcount = 30;
     public int nowbulletcount;
 
+    [SerializeField]
+    private MeshRenderer muzzleFlash;
+
     public enum FireMode
     {
         automatic,
@@ -27,7 +30,7 @@ public class FirePos : MonoBehaviour
 
 	void Start()
     {
-        
+        muzzleFlash = GetComponentInChildren<MeshRenderer>();
     }
 
 	void Update()
@@ -92,18 +95,27 @@ public class FirePos : MonoBehaviour
     
     void Fire()
     {
+        //Instantiate(bulletprefab, fire_pos.position, fire_pos.rotation);
+        //동적 생성 함수 : 오브젝트를 필요할 때 생성시키는 함수
+        RaycastHit hit;
+        if(Physics.Raycast(fire_pos.position, fire_pos.forward, out hit, 30f))
         {
-            Instantiate(bulletprefab, fire_pos.position, fire_pos.rotation);
-            //동적 생성 함수 : 오브젝트를 필요할 때 생성시키는 함수
-            source.PlayOneShot(firesound, 1.0f);
-            if (Hand.ishavem4a1)
+            if(hit.collider.gameObject.tag=="ZOMBIE")
             {
-                ani.Play("aimFire");
+                object[] _objects = new object[2];
+                _objects[0] = hit.point;
+                _objects[1] = 20;
+                hit.collider.gameObject.SendMessage("OnDamage", _objects);
             }
-            else
-                ani.Play("fire");
         }
-        nowbulletcount--;
+        source.PlayOneShot(firesound, 1.0f);
+        StartCoroutine(ShowMuzzleFlash());
+        if (Hand.ishavem4a1)
+        {
+            ani.Play("aimFire");
+        }
+        else
+            ani.Play("fire");
         
     }
     IEnumerator FastShotFire()
@@ -129,6 +141,12 @@ public class FirePos : MonoBehaviour
             }
 }
         }
+    IEnumerator ShowMuzzleFlash()
+    {
+        muzzleFlash.enabled = true;
+        yield return new WaitForSeconds(Random.Range(0.05f, 0.15f));
+        muzzleFlash.enabled = false;
+    }
 
     FireMode FireModeChange()
     {
@@ -146,6 +164,7 @@ public class FirePos : MonoBehaviour
         return mode;
 
     }
+
 
     void MagazineChange()
     {
