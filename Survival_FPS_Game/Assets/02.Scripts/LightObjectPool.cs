@@ -31,6 +31,50 @@ public class LightObjectPool : MonoBehaviour
 
     public void LightObjectPoolManager()
     {
-
+        if(!StairLight.IsExit)
+        {
+            if(StairLight.lightcount ==1)
+            {
+                GameObject lightobj2 = (GameObject)Instantiate(Light_2);
+                lightobj2.transform.parent = ParentLightObj.transform;
+                lightobj2.transform.localPosition = new Vector3(-3.577f, -0.221f, 19.652f);
+            }
+            if (StairLight.lightcount == 2)
+            {
+                GameObject lightobj2 = (GameObject)Instantiate(Light_2);
+                lightobj2.transform.parent = ParentLightObj.transform;
+                lightobj2.transform.localPosition = new Vector3(-3.577f, -0.221f, 16.652f);
+            }
+            if (StairLight.lightcount == 3)
+            {
+                GameObject lightobj2 = (GameObject)Instantiate(Light_2);
+                lightobj2.transform.parent = ParentLightObj.transform;
+                lightobj2.transform.localPosition = new Vector3(-3.577f, -0.221f, 13.652f);
+            }
+            if (StairLight.lightcount == 4)
+            {
+                GameObject lightobj2 = (GameObject)Instantiate(Light_2);
+                lightobj2.transform.parent = ParentLightObj.transform;
+                lightobj2.transform.localPosition = new Vector3(-3.577f, -0.221f, 10.652f);
+            }
+            if (StairLight.lightcount == 5)
+            {
+                GameObject lightobj2 = (GameObject)Instantiate(Light_2);
+                lightobj2.transform.parent = ParentLightObj.transform;
+                lightobj2.transform.localPosition = new Vector3(-3.577f, -0.221f, 7.652f);
+            }
+            if (StairLight.lightcount == 6)
+            {
+                GameObject lightobj2 = (GameObject)Instantiate(Light_2);
+                lightobj2.transform.parent = ParentLightObj.transform;
+                lightobj2.transform.localPosition = new Vector3(-3.577f, -0.221f, 4.652f);
+            }
+            if (StairLight.lightcount == 7)
+            {
+                GameObject lightobj2 = (GameObject)Instantiate(Light_2);
+                lightobj2.transform.parent = ParentLightObj.transform;
+                lightobj2.transform.localPosition = new Vector3(-3.577f, -0.221f, 1.652f);
+            }
+        }
     }
 }

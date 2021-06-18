@@ -98,9 +98,9 @@ public class FirePos : MonoBehaviour
         //Instantiate(bulletprefab, fire_pos.position, fire_pos.rotation);
         //동적 생성 함수 : 오브젝트를 필요할 때 생성시키는 함수
         RaycastHit hit;
-        if(Physics.Raycast(fire_pos.position, fire_pos.forward, out hit, 30f))
+        if(Physics.Raycast(fire_pos.position, fire_pos.forward, out hit, 30f, 1<<10))
         {
-            if(hit.collider.gameObject.tag=="ZOMBIE")
+            if(hit.collider.gameObject.tag=="ENEMY")
             {
                 object[] _objects = new object[2];
                 _objects[0] = hit.point;

@@ -55,7 +55,7 @@ public class StoneMonster : MonoBehaviour
     {
         if (collision.gameObject.tag=="BULLET")
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
             ani.Play("Anim_Damage");
             hp -= dmg;
             if (hp <= 0)
@@ -67,7 +67,7 @@ public class StoneMonster : MonoBehaviour
         ani.Play("Anim_Death");
         this.GetComponent<SphereCollider>().enabled = false;
         isDie = true;
-        Destroy(this.gameObject, 3.0f);
+        //Destroy(this.gameObject, 3.0f);
 
     }
 }

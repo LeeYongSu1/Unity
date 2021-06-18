@@ -101,8 +101,13 @@ public class ZomBie : MonoBehaviour
         canvas.enabled = false;
         hpbar.fillAmount = 1.0f;
         hpbar.color = Color.green;
+        gameObject.SetActive(false);
         Invoke("DestroyZombie", 3f);
         U_Manager.umanager.KillCount(1);
+        foreach (Collider col in GetComponentsInChildren<SphereCollider>())
+        {
+            col.enabled = false;
+        }
 
     }
 

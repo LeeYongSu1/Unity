@@ -8,8 +8,8 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField]
     private GameObject zombiePre;
-
-    private Queue<ZomBie> zombieQue = new Queue<ZomBie>();
+    public E_Manager _manager;
+    public Queue<ZomBie> zombieQue = new Queue<ZomBie>();
 
 
 
@@ -57,11 +57,17 @@ public class ObjectPool : MonoBehaviour
             newObj.gameObject.SetActive(true);
             return newObj;
         }
+        /*foreach (ZomBie zom in Instance.zombieQue)
+        {
+            int idx = Random.Range(1, 5);
+            zom.transform.position = _manager.points[idx].position;
+        }*/
+
     }
 
     public static void ReturnObject(ZomBie zomBie)
     {
-        zomBie.gameObject.SetActive(false);
+
         zomBie.transform.SetParent(Instance.transform);
         Instance.zombieQue.Enqueue(zomBie);
     }

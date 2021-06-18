@@ -24,20 +24,20 @@ public class StairLight : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player" || other.gameObject.tag=="ENEMY")
         {
             lightcount++;
             s_light.enabled = true;
             Source.PlayOneShot(lightSound, 1.0f);
             IsExit = false;
-            //lightObjectPool.LightObjectPoolManager();
+            lightObjectPool.LightObjectPoolManager();
         }
         
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" || other.gameObject.tag == "ENEMY")
         {
             s_light.enabled = false;
             Source.PlayOneShot(lightSound, 1.0f);

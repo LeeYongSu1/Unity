@@ -36,7 +36,7 @@ public class E_Manager : MonoBehaviour
         {
             /* var zom = Instantiate(zombiePrefab);*/
             StartCoroutine(Zombie());
-           
+
             /*zom.name = "zombie" + i.ToString();*/
         }
         for (int i = 0; i < s_maxcount; i++)
@@ -52,11 +52,12 @@ public class E_Manager : MonoBehaviour
     {
         if (Time.time - timePrev >= 3.0f)
         {
-            spawncount = GameObject.FindGameObjectsWithTag("ZOMBIE").Length;
+            spawncount = GameObject.FindGameObjectsWithTag("ENEMY").Length;
            
             if (maxcount > spawncount)
             {
-                CreateZomBie();
+                //CreateZomBie();
+                //StartCoroutine(Zombie());
                 timePrev = Time.time;
             }
             
@@ -108,6 +109,6 @@ public class E_Manager : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         ObjectPool.GetObject();
-        
+
     }
 }
