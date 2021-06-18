@@ -117,6 +117,15 @@ public class WizardCtrl : MonoBehaviour
             else
                 isLanding = false;
                 ani.Play(wizardAni.jump.name);
+                Invoke("JumpDeley", 1.0f);
+        }
+    }
+    void JumpDeley()
+    {
+        if(ani.isPlaying)
+        {
+            ani.Stop(wizardAni.jump.name);
+            ani.PlayQueued(wizardAni.run.name);
         }
     }
 
