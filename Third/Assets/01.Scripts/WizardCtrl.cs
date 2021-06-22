@@ -52,6 +52,7 @@ public class WizardCtrl : MonoBehaviour
         ClickMove();
         ClickAttack();
         jump();
+        FastRun();
     }
 
     void ClickMove()
@@ -59,23 +60,24 @@ public class WizardCtrl : MonoBehaviour
                 //화면에서 보는 좌표와 실제 좌표를 맞춰준다.
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.yellow);
-        if (!isAttacking)
+        if (!isMoving)
         {
             if (Input.GetMouseButton(0))
             {
+                
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 12))
                 {
+                    navi.speed = 5f;
                     navi.isStopped = false;
                     target = hit.point;
                     navi.SetDestination(target);
                     isMoving = true;
                     isIdle = false;
                     ani.CrossFade(wizardAni.walk.name, 0.3f);
-
-                    
                 }
                 
             }
+           
 
             if (isMoving)
             {
@@ -95,16 +97,19 @@ public class WizardCtrl : MonoBehaviour
        
         if (Input.GetMouseButton(1))
         {
+            navi.speed = 5f;
             navi.isStopped = true;
             isIdle = false;
+            isMoving = false;
             ani.Play(wizardAni.attack.name);
             //StartCoroutine(AttackStop());
         }
 
         if(Input.GetMouseButtonUp(1))
         {
-            navi.isStopped = false;
             isIdle = true;
+            navi.isStopped = true;
+            ani.Play(wizardAni.idle.name);
         }
     }
     void jump()
@@ -134,4 +139,17 @@ public class WizardCtrl : MonoBehaviour
     //    yield return new WaitForSeconds(wizardAni.attack.length);
     //    navi.isStopped = false;
     //}
+    void FastRun()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButton(0))
+        {
+            navi.speed = 22f;
+            navi.isStopped = false;
+            target = hit.point;
+            navi.SetDestination(target);
+            isMoving = true;
+            isIdle = false;
+            ani.CrossFade(wizardAni.run.name, 0.3f);
+        }
+    }
 }
