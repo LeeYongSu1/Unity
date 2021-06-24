@@ -1,0 +1,9 @@
+﻿  Car.cpp
+  Car2.cpp
+  Car2Main.cpp
+  CarMain.cpp
+  코드를 생성하고 있습니다...
+Car2.obj : error LNK2005: "public: void __thiscall Car::Accel(void)" (?Accel@Car@@QAEXXZ)이(가) Car.obj에 이미 정의되어 있습니다.
+Car2.obj : error LNK2005: "public: void __thiscall Car::Break(void)" (?Break@Car@@QAEXXZ)이(가) Car.obj에 이미 정의되어 있습니다.
+Car2.obj : error LNK2005: "public: void __thiscall Car::ShowCarState(void)" (?ShowCarState@Car@@QAEXXZ)이(가) Car.obj에 이미 정의되어 있습니다.
+C:\Users\seoul it\Desktop\C++\06-02_C++\CarStruct\Debug\CarStruct.exe : fatal error LNK1169: 여러 번 정의된 기호가 있습니다.

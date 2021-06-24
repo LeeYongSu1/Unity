@@ -1,0 +1,5 @@
+﻿  TestMain.cpp
+  Test_.cpp
+Test_.obj : error LNK2005: "int arrNum" (?arrNum@@3HA)이(가) TestMain.obj에 이미 정의되어 있습니다.
+TestMain.obj : error LNK2001: 확인할 수 없는 외부 기호 "class Account * * arr" (?arr@@3PAPAVAccount@@A)
+C:\Users\seoul it\Desktop\C++\06-10\Release\06-10.exe : fatal error LNK1120: 1개의 확인할 수 없는 외부 참조입니다.

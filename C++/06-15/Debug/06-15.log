@@ -1,0 +1,5 @@
+﻿  Banking_Handler.cpp
+  Banking_Main.cpp
+  코드를 생성하고 있습니다...
+Banking_Handler.obj : error LNK2001: 확인할 수 없는 외부 기호 "public: virtual void __thiscall HighCreditAccount::Deposit(int)" (?Deposit@HighCreditAccount@@UAEXH@Z)
+C:\Users\seoul it\Desktop\C++\06-15\Debug\06-15.exe : fatal error LNK1120: 1개의 확인할 수 없는 외부 참조입니다.
