@@ -1,0 +1,6 @@
+﻿  AccountHandler.cpp
+  InterRateAccount.cpp
+C:\Users\seoul it\Desktop\unitywork\Git\C++\06-29\InterRateAccount.cpp(9,30): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\seoul it\Desktop\unitywork\Git\C++\06-29\InterRateAccount.cpp(20,30): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+  06-29.vcxproj -> C:\Users\seoul it\Desktop\unitywork\Git\C++\06-29\Debug\06-29.exe
