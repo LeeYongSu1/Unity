@@ -1,0 +1,8 @@
+﻿  소스2.cpp
+C:\Users\seoul it\Desktop\unitywork\Git\WinApi\asdf\소스2.cpp(42,19): warning C4101: 'oBrush' :참조되지 않은 지역 변수입니다.
+  코드를 생성하고 있습니다.
+  0 of 2 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  코드를 생성했습니다.
+  asdf.vcxproj -> C:\Users\seoul it\Desktop\unitywork\Git\WinApi\asdf\Release\asdf.exe

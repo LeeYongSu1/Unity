@@ -2,7 +2,7 @@
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
-LPCSTR lpszClass = "Key";
+LPCSTR lpszClass = "GdiObj";
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
 	, LPSTR lpszCmdParam, int nCmdShow)
@@ -36,33 +36,58 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
 	return Message.wParam;
 }
 
+//LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+//{
+//	HDC hdc;
+//	PAINTSTRUCT ps;
+//	static char str[256];
+//	int len;
+//	switch (iMessage) {
+//	case WM_CHAR:
+//		if ((TCHAR)wParam == 32) {
+//			str[0] = 0;
+//		}
+//		else {
+//			len = strlen(str);
+//			str[len] = (TCHAR)wParam;
+//			str[len + 1] = 0;
+//		}
+//		InvalidateRect(hWnd, NULL, FALSE);
+//		return 0;
+//	case WM_PAINT:
+//		hdc = BeginPaint(hWnd, &ps);
+//		TextOut(hdc, 100, 100, str, strlen(str));
+//		EndPaint(hWnd, &ps);
+//		return 0;
+//	case WM_DESTROY:
+//		PostQuitMessage(0);
+//		return 0;
+//	}
+//
+//	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+//}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	HDC hdc;
 	PAINTSTRUCT ps;
-	static char str[256];
-	int len;
+	static int x, y;
+	static RECT rt;
 	switch (iMessage) {
-	case WM_CHAR:
-		if ((TCHAR)wParam == 32) {
-			str[0] = 0;
-		}
-		else {
-			len = strlen(str);
-			str[len] = (TCHAR)wParam;
-			str[len + 1] = 0;
-		}
-		InvalidateRect(hWnd, NULL, FALSE);
+	case WM_CREATE:
+		GetClientRect(hWnd, &rt);
+		hdc = BeginPaint(hWnd, &ps);
+		Rectangle(hdc, 50, 50, 300, 200);
+		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		TextOut(hdc, 100, 100, str, strlen(str));
+		Rectangle(hdc, 50, 50, 300, 200);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
 	}
-
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 }
