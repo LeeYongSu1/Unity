@@ -18,7 +18,8 @@ public class ZomBie : MonoBehaviour
     private int _hp = 100;
 
     private bool isDie = false;
-    
+    [SerializeField]
+    public GameObject effect;
     [Header("UI")]
     public Image hpbar;
     public Canvas canvas;
@@ -36,7 +37,7 @@ public class ZomBie : MonoBehaviour
 
         float dist = Vector3.Distance(playerTr.position, zombieTr.position);
         //3차원 에서 거리를 구하는 함수 
-
+        zombieTr.position = gameObject.transform.position;
         if (dist <= attackdist)
         {   //네비 추적 중지 
             navi.isStopped = false;
@@ -74,9 +75,22 @@ public class ZomBie : MonoBehaviour
     {
         ani.SetTrigger("IsHit");
         HPManager(_object);
-
+        Vector3 effectPoint = (Vector3)_object[0];
+        StartCoroutine(ShowBloodEffect( effectPoint, zombieTr));
+        effect.SetActive(true);
         if (hp <= 0)
             Die();
+    }
+
+    IEnumerator ShowBloodEffect(Vector3 _object, Transform tr)
+    {
+        Vector3 effectPoint = _object;
+        Quaternion rot = Quaternion.Euler(effectPoint);
+        GameObject blood = Instantiate<GameObject>(effect, effectPoint, rot);
+        blood.transform.position = zombieTr.position;
+        Destroy(blood, 2.0f);
+        yield return null;
+        
     }
 
     void HPManager(object[] _object)
@@ -101,9 +115,9 @@ public class ZomBie : MonoBehaviour
         canvas.enabled = false;
         hpbar.fillAmount = 1.0f;
         hpbar.color = Color.green;
-        gameObject.SetActive(false);
-        Invoke("DestroyZombie", 3f);
         U_Manager.umanager.KillCount(1);
+        //gameObject.SetActive(false);
+        Invoke("DestroyZombie", 3f);
         foreach (Collider col in GetComponentsInChildren<SphereCollider>())
         {
             col.enabled = false;

@@ -8,7 +8,10 @@ public class Player : MonoBehaviour
     public GameObject[] weapons;
     public bool[] hasWeapons;
     public GameObject[] grenades;
-    public int hasGrenade; 
+    public int hasGrenade;
+    public GameObject bullet;
+    public Camera followCamera;
+    public Transform firePos;
 
     public int ammo;
     public int coin;
@@ -27,6 +30,7 @@ public class Player : MonoBehaviour
     bool isJump;
     bool isDodge = false;
     bool iDown;
+    bool fDown;
     bool sDown1;
     bool sDown2;
     bool sDown3;
@@ -56,7 +60,9 @@ public class Player : MonoBehaviour
         Dodge();
         Interaction();
         Swap();
+        Attack();
     }
+
     #region move
     void GetInput()
     {
@@ -65,9 +71,18 @@ public class Player : MonoBehaviour
         wDown = Input.GetButton("Walk");
         jDown = Input.GetButtonDown("Jump");
         iDown = Input.GetButtonDown("Interaction");
+        fDown = Input.GetButtonDown("Fire1");
         sDown1 = Input.GetButtonDown("Swap1"); 
         sDown2 = Input.GetButtonDown("Swap2");
         sDown3 = Input.GetButtonDown("Swap3");
+    }
+
+    void Attack()
+    {
+        if(fDown && hasWeapons[1] || hasWeapons[2])
+        {
+            StartCoroutine(StartShot());
+        }
     }
 
     void Move()
@@ -87,6 +102,15 @@ public class Player : MonoBehaviour
     void Trun()
     {
         transform.LookAt(transform.position + moveVec);
+        Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
+        //Debug.DrawRay(ray.origin, ray.direction, Color.red, 100f);
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit, 100))
+        {
+            Vector3 nextVec = hit.point - transform.position;
+            transform.LookAt(transform.position + nextVec);
+        }
+        
         /*Vector3 dir = (transform.position + moveVec) - transform.position;
         Quaternion rot = Quaternion.LookRotation(dir.normalized);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, 0.2f);*/
@@ -174,6 +198,16 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    IEnumerator StartShot()
+    {
+        anim.SetTrigger("doFire");
+        yield return new WaitForSeconds(0.3f);
+        var _bullet = Instantiate(bullet, firePos.transform.position, firePos.transform.rotation);
+        Rigidbody rigidbody = _bullet.GetComponent<Rigidbody>();
+        rigidbody.velocity = firePos.forward * 50;
+        
+
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Floor")

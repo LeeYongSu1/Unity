@@ -2837,6 +2837,7 @@ MonoBehaviour:
   tracedist: 25
   attackdist: 2.5
   hp: 100
+  effect: {fileID: 141434, guid: 92741d35de61d3548a1a78f80df11ce9, type: 3}
   hpbar: {fileID: 6819280347328188146}
   canvas: {fileID: 823608060908284528}
   hptext: {fileID: 2052269560}

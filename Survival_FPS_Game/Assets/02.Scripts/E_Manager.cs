@@ -32,13 +32,8 @@ public class E_Manager : MonoBehaviour
         s_timePrev = Time.time;//현재 시간
         stone_time = Time.time;
 
-        for(int i =0; i< maxcount; i++)
-        {
-            /* var zom = Instantiate(zombiePrefab);*/
-            StartCoroutine(Zombie());
+        
 
-            /*zom.name = "zombie" + i.ToString();*/
-        }
         for (int i = 0; i < s_maxcount; i++)
         {
            
@@ -58,6 +53,7 @@ public class E_Manager : MonoBehaviour
             {
                 //CreateZomBie();
                 //StartCoroutine(Zombie());
+                StartCoroutine(Zombie());
                 timePrev = Time.time;
             }
             
@@ -108,7 +104,9 @@ public class E_Manager : MonoBehaviour
     IEnumerator Zombie()
     {
         yield return new WaitForSeconds(2.0f);
-        ObjectPool.GetObject();
-
+        int idx = Random.Range(0, points.Length);
+        var zombie = ObjectPool.GetObject();
+        zombie.transform.position = points[idx].position;
+        zombie.gameObject.SetActive(true);
     }
 }

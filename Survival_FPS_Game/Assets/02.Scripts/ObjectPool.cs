@@ -28,6 +28,7 @@ public class ObjectPool : MonoBehaviour
     private ZomBie CreatNewObject()
     {
         var newObj = Instantiate(zombiePre).GetComponent<ZomBie>();
+        newObj.transform.SetParent(this.transform);
         newObj.gameObject.SetActive(false);
 
         return newObj;
@@ -46,14 +47,14 @@ public class ObjectPool : MonoBehaviour
         if (Instance.zombieQue.Count > 0)
         {
             var obj = Instance.zombieQue.Dequeue();
-            obj.transform.SetParent(null);
+            obj.transform.SetParent(Instance.transform);
             obj.gameObject.SetActive(true);
             return obj;
         }
         else
         {
             var newObj = Instance.CreatNewObject();
-            newObj.transform.SetParent(null);
+            newObj.transform.SetParent(Instance.transform);
             newObj.gameObject.SetActive(true);
             return newObj;
         }
@@ -67,9 +68,8 @@ public class ObjectPool : MonoBehaviour
 
     public static void ReturnObject(ZomBie zomBie)
     {
-
         zomBie.transform.SetParent(Instance.transform);
-        Instance.zombieQue.Enqueue(zomBie);
+        zomBie.gameObject.SetActive(false);
     }
 
 }

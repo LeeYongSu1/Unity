@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class FirePos : MonoBehaviour
@@ -14,9 +15,12 @@ public class FirePos : MonoBehaviour
     public Transform fire_pos;
     public Animation ani;
     public FireMode mode;
-    public int magazine = 3;
-    public int bulletcount = 30;
-    public int nowbulletcount;
+    public Image magazineImg;
+    public Text magazineTxt;
+    public int maxbullet = 30;
+    public int remainingbullet = 30;
+    public float reloadTime = 2.0f;
+    private bool isReloading = false;
 
     [SerializeField]
     private MeshRenderer muzzleFlash;
@@ -43,26 +47,20 @@ public class FirePos : MonoBehaviour
         
         if (mode==FireMode.one && Input.GetMouseButtonDown(0))
         {
-            if (Hand.isrun == false)
+            if (Hand.isrun == false && !isReloading)
             {
-                nowbulletcount = bulletcount;
-                magazine = 3;
-                if (nowbulletcount >= 0 && magazine != 0)
-                {
-                    Fire();
-                }
-                else if (nowbulletcount <= 0 && magazine != 0)
-                {
-                    MagazineChange();
-                }
-                else
-                    return;
-                
+                --remainingbullet;
+                Fire();
+                //MagazineChange();
                 
                 if (Hand.ishavem4a1 == true)
                 {
                     StartCoroutine(FastShotFire());
 
+                }
+                if(remainingbullet == 0)
+                {
+                    StartCoroutine(Reloading());
                 }
             }
         }
@@ -106,6 +104,7 @@ public class FirePos : MonoBehaviour
                 _objects[0] = hit.point;
                 _objects[1] = 20;
                 hit.collider.gameObject.SendMessage("OnDamage", _objects);
+                
             }
         }
         source.PlayOneShot(firesound, 1.0f);
@@ -116,8 +115,26 @@ public class FirePos : MonoBehaviour
         }
         else
             ani.Play("fire");
+
+        magazineImg.fillAmount = (float)remainingbullet/maxbullet;
+        UpdateBulletTxt();
+    }
+
+    void UpdateBulletTxt()
+    {
+        magazineTxt.text = string.Format("<color=#ff0000>{0}</color> /{1}", remainingbullet, maxbullet);
+    }
+    IEnumerator Reloading()
+    {
+        isReloading = true;
+
+        yield return new WaitForSeconds(reloadTime);
+        isReloading = false;
+        remainingbullet = maxbullet;
+        magazineImg.fillAmount = 1.0f;
         
     }
+
     IEnumerator FastShotFire()
     {
         Fire();
@@ -166,9 +183,9 @@ public class FirePos : MonoBehaviour
     }
 
 
-    void MagazineChange()
+    /*void MagazineChange()
     {
         magazine -= 1;
         ani.Play("reloadStart");
-    }
+    }*/
 }
